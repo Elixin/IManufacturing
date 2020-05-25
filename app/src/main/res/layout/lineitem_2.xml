@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_marginLeft="3dp"
+    android:layout_marginRight="3dp"
+    android:layout_marginTop="20dp"
+
+    android:background="#EDEDED"
+    android:gravity="center"
+    android:layout_height="120dp">
+
+    <TextView
+        android:gravity="center"
+        android:textColor="@color/black3"
+        android:textSize="28sp"
+        android:layout_width="0dp"
+        android:textStyle="bold"
+        android:layout_weight="1"
+        android:layout_height="80dp"
+        android:text="当前生产环节:" />
+
+    <TextView
+        android:id="@+id/nowproduction"
+        android:layout_width="0dp"
+        android:layout_weight="2"
+        android:layout_height="80dp"
+        android:gravity="center|left"
+        android:textStyle="bold"
+        android:textColor="@color/colorAccent"
+        android:textSize="28sp"
+        android:text="TextView" />
+</LinearLayout>

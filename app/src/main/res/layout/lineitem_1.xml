@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_marginLeft="3dp"
+        android:layout_marginRight="3dp"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:orientation="horizontal"
+        android:background="#EDEDED"
+        android:layout_marginBottom="10dp"
+        >
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:text="生产类型:"
+            android:textSize="28sp"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:textColor="@color/black3"
+            android:textStyle="bold"
+            />
+        <ImageView
+            android:layout_marginLeft="80dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:id="@+id/carimg"
+            android:layout_height="match_parent"
+            android:src="@drawable/car001"
+            />
+        <TextView
+            android:id="@+id/cartype"
+            android:layout_marginLeft="80dp"
+            android:layout_width="0dp"
+            android:text="SUV型汽车"
+            android:layout_weight="1"
+            android:textSize="28sp"
+            android:gravity="center"
+            android:textColor="@color/black3"
+            android:textStyle="bold"
+            android:layout_height="match_parent"/>
+    </LinearLayout>
+</LinearLayout>

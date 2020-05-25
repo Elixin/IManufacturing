@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_marginTop="40dp"
+    android:background="#EDEDED"
+    android:layout_marginLeft="3dp"
+    android:layout_marginRight="3dp"
+    android:layout_width="match_parent"
+    android:layout_height="200dp">
+
+    <TextView
+        android:id="@+id/linename"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:text="第一生产线"
+        android:textSize="34sp"
+        android:gravity="center"
+        android:layout_weight="1"
+        android:textColor="@color/black3"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/isai"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:text="自动生产中"
+        android:textSize="34sp"
+        android:gravity="center|left"
+        android:layout_weight="1"
+        android:textColor="@color/green"
+        android:textStyle="bold" />
+
+</LinearLayout>
