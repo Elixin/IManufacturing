@@ -19,6 +19,7 @@ import com.google.android.material.tabs.TabLayout;
 import com.jaeger.library.StatusBarUtil;
 import com.lenovo.manufacture.fragment.FInformationFragment;
 import com.lenovo.manufacture.fragment.FLineFragment;
+import com.lenovo.manufacture.fragment.FPersionFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -104,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
         fragments = new ArrayList<>();
         fragments.add(new FLineFragment());
         fragments.add(new FInformationFragment());
-        fragments.add(new TextfrFragment(2));
+        fragments.add(new FPersionFragment());
         fragments.add(new TextfrFragment(3));
 
     }
