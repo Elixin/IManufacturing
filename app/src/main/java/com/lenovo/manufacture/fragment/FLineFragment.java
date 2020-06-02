@@ -27,6 +27,7 @@ import com.lenovo.manufacture.pojo.ProductionLine;
 import com.lenovo.manufacture.pojo.Stage;
 import com.lenovo.manufacture.pojo.UserPeople;
 import com.lenovo.manufacture.pojo.UserProductionLine;
+import com.lenovo.manufacture.util.RecycleviewItemClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +41,13 @@ public class FLineFragment extends BaseFragment {
     private LinsAdapater linsAdapater;
     private LinePersionAdapter persionAdapter;
     private Gson gson = new Gson();
+    private List<ProductionLine.DataBean> production;
+    private List<UserProductionLine.DataBean> userproduction;
+    private List<Car.DataBean> car;
+    private List<UserPeople.DataBean> userpeople;
+    private List<People.DataBean> people;
+    private List<Stage.DataBean> stage;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -66,6 +74,31 @@ public class FLineFragment extends BaseFragment {
         linepersion.setLayoutManager(new LinearLayoutManager(getContext()));
         linepersion.setAdapter(persionAdapter);
 
+        linev.addOnItemTouchListener(new RecycleviewItemClickListener(getContext(), linev, new RecycleviewItemClickListener.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int postion) {
+                alertDialog.show();
+                new Thread(()->{
+                    try {
+                        Thread.sleep(2000);
+                        handler.post(() -> {
+                            alertDialog.dismiss();
+                            setDataInAdapet(postion, production, userproduction, userpeople, people, stage);
+                            persionAdapter.notifyDataSetChanged();
+                        });
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }).start();
+
+            }
+
+            @Override
+            public void onItemLongClick(View view, int postion) {
+
+            }
+        }));
+
     }
 
     private void initWait() {
@@ -79,26 +112,26 @@ public class FLineFragment extends BaseFragment {
     private Handler handler = new Handler();
     private void initdata() {
         //请求生产线信息
-        List<ProductionLine.DataBean> production = gson.fromJson(productionlinejson, ProductionLine.class).getData();
-        List<UserProductionLine.DataBean> userproduction = gson.fromJson(userproductionlinejson, UserProductionLine.class).getData();
+        production = gson.fromJson(productionlinejson, ProductionLine.class).getData();
+        userproduction = gson.fromJson(userproductionlinejson, UserProductionLine.class).getData();
         //请求车辆信息
-        List<Car.DataBean> car = gson.fromJson(carjson, Car.class).getData();
+        car = gson.fromJson(carjson, Car.class).getData();
         //请求员工信息
-        List<UserPeople.DataBean> userpeople = gson.fromJson(userPeoplejson, UserPeople.class).getData();
-        List<People.DataBean> people = gson.fromJson(peoplejson, People.class).getData();
+        userpeople = gson.fromJson(userPeoplejson, UserPeople.class).getData();
+        people = gson.fromJson(peoplejson, People.class).getData();
         //请求当前生产环节信息
-        List<Stage.DataBean> stage = gson.fromJson(stagejson, Stage.class).getData();
+        stage = gson.fromJson(stagejson, Stage.class).getData();
         handler.post(() -> {
             linsAdapater.setUserproduction(userproduction);
             linsAdapater.notifyDataSetChanged();
-            setDataInAdapet(production, userproduction, userpeople, people, stage);
+            setDataInAdapet(0, production, userproduction, userpeople, people, stage);
             persionAdapter.notifyDataSetChanged();
         });
     }
 
-    private void setDataInAdapet(List<ProductionLine.DataBean> production, List<UserProductionLine.DataBean> userproduction, List<UserPeople.DataBean> userpeople, List<People.DataBean> people, List<Stage.DataBean> stage) {
+    private void setDataInAdapet(int postion, List<ProductionLine.DataBean> production, List<UserProductionLine.DataBean> userproduction, List<UserPeople.DataBean> userpeople, List<People.DataBean> people, List<Stage.DataBean> stage) {
         for (int i = 0; i < production.size(); i++) {
-            if (userproduction.get(0).getProductionLineId() == production.get(i).getId()) {
+            if (userproduction.get(postion).getProductionLineId() == production.get(i).getId()) {
                 //将数据传入adapter
                 persionAdapter.setProduction(production.get(i));
                 break;
@@ -106,7 +139,7 @@ public class FLineFragment extends BaseFragment {
         }
         List<People.DataBean> peoples = new ArrayList<>();
         for (int i = 0; i < userpeople.size(); i++) {
-            if (userproduction.get(0).getId() == userpeople.get(i).getUserProductionLineId()) {
+            if (userproduction.get(postion).getId() == userpeople.get(i).getUserProductionLineId()) {
                 Log.d(TAG, "setDataInAdapet: "+userpeople.get(i).getUserProductionLineId());
                 for (int j = 0; j < people.size(); j++) {
                     if (userpeople.get(i).getPeopleId() == people.get(j).getId()) {
@@ -117,7 +150,7 @@ public class FLineFragment extends BaseFragment {
         }
         persionAdapter.setPeople(peoples);
         for (int i = 0; i < stage.size(); i++) {
-            if (stage.get(i).getId() == userproduction.get(0).getStageId()) {
+            if (stage.get(i).getId() == userproduction.get(postion).getStageId()) {
                 persionAdapter.setStage(stage.get(i));
                 break;
             }

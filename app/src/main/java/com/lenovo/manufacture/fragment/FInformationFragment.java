@@ -15,6 +15,8 @@ import com.google.android.material.tabs.TabLayout;
 import com.lenovo.manufacture.R;
 import com.lenovo.manufacture.base.BaseFragment;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.ArrayList;
 import java.util.List;
 public class FInformationFragment extends BaseFragment {
@@ -55,6 +57,29 @@ public class FInformationFragment extends BaseFragment {
         infoview.setAdapter(fragmentStatePagerAdapter);
         infoview.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tab));
         tab.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(infoview));
+        tab.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+//                Toast.makeText(getContext(), "tab.getPosition()"+tab.getPosition(), Toast.LENGTH_SHORT).show();
+                Shell shell = new Shell();
+                shell.setTag(tab.getPosition());
+                EventBus.getDefault().postSticky(shell);
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+
+        Shell shell = new Shell();
+        shell.setTag(0);
+        EventBus.getDefault().postSticky(shell);
     }
 
     private void initfragment() {
@@ -70,4 +95,16 @@ public class FInformationFragment extends BaseFragment {
         }
     }
 
+}
+
+class Shell{
+    private  int tag;
+
+    public int getTag() {
+        return tag;
+    }
+
+    public void setTag(int tag) {
+        this.tag = tag;
+    }
 }

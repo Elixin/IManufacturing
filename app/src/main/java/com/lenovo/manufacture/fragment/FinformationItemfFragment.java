@@ -17,6 +17,10 @@ import com.lenovo.manufacture.R;
 import com.lenovo.manufacture.adapter.InfomationAdapter;
 import com.lenovo.manufacture.base.BaseFragment;
 import com.lenovo.manufacture.pojo.Information;
+import com.lenovo.manufacture.util.RecycleviewItemClickListener;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -29,12 +33,21 @@ public class FinformationItemfFragment extends BaseFragment {
     private boolean MTF;
     private List<Information.DataBean> collect;
     private InfomationAdapter infomationAdapter;
+    private int tag;
+    private List<Information.DataBean> data;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        EventBus.getDefault().unregister(this);
+        EventBus.getDefault().register(this);
         return inflater.inflate(R.layout.finformation_itemf, null);
     }
+    @Subscribe(sticky = true)
+    public void setdata(Shell shell){
+        tag = shell.getTag();
+    }
+
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
@@ -43,6 +56,19 @@ public class FinformationItemfFragment extends BaseFragment {
         inforv.setLayoutManager(new LinearLayoutManager(getContext()));
         infomationAdapter = new InfomationAdapter();
         inforv.setAdapter(infomationAdapter);
+
+        inforv.addOnItemTouchListener(new RecycleviewItemClickListener(getContext(), inforv, new RecycleviewItemClickListener.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int postion) {
+                EventBus.getDefault().postSticky(collect.get(postion));
+//                startActivity(new Intent(FinformationItemfFragment.this,xx.class));
+            }
+
+            @Override
+            public void onItemLongClick(View view, int postion) {
+
+            }
+        }));
     }
 
     private void initWait() {
@@ -52,6 +78,7 @@ public class FinformationItemfFragment extends BaseFragment {
         alertDialog = builder.create();
         alertDialog.show();
     }
+
     @Override
     protected void onFragmentVisibleChange(boolean isVisible) {
         if (isVisible){
@@ -84,8 +111,8 @@ public class FinformationItemfFragment extends BaseFragment {
     private Handler handler = new Handler();
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void initdata() {
-        List<Information.DataBean> data = gson.fromJson(informationjson, Information.class).getData();
-        collect = data.stream().filter(dataBean -> dataBean.getStatus() == 0).collect(Collectors.toList());
+        data = gson.fromJson(informationjson, Information.class).getData();
+        collect = data.stream().filter(dataBean -> dataBean.getStatus() == tag).collect(Collectors.toList());
         handler.post(() -> {
             infomationAdapter.setInformations(collect);
             infomationAdapter.notifyDataSetChanged();

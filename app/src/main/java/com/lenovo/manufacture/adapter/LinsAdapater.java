@@ -1,5 +1,6 @@
 package com.lenovo.manufacture.adapter;
 
+import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,6 +31,7 @@ public class LinsAdapater extends RecyclerView.Adapter<LinsAdapater.VH> {
         return new VH(inflate);
     }
 
+    @SuppressLint("ResourceAsColor")
     @Override
     public void onBindViewHolder(@NonNull VH holder, int position) {
         UserProductionLine.DataBean dataBean = userproduction.get(position);
