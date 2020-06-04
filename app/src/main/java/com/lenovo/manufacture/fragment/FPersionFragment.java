@@ -16,6 +16,7 @@ import com.lenovo.manufacture.R;
 import com.lenovo.manufacture.adapter.PersionAdapter;
 import com.lenovo.manufacture.base.BaseFragment;
 import com.lenovo.manufacture.pojo.People;
+import com.lenovo.manufacture.pojo.UserPeople;
 import com.lenovo.manufacture.util.RecycleviewItemClickListener;
 
 import java.util.List;
@@ -32,6 +33,8 @@ public class FPersionFragment extends BaseFragment {
     private PersionAdapter persionAdapter;
 
     private Handler handler = new Handler();
+    private List<People.DataBean> peoples;
+    private List<UserPeople.DataBean> userpeoples;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -94,11 +97,14 @@ public class FPersionFragment extends BaseFragment {
 
     private void initdata() {
         Gson gson = new Gson();
-        List<People.DataBean> peoples = gson.fromJson(people, People.class).getData();
+        peoples = gson.fromJson(people, People.class).getData();
+        userpeoples = gson.fromJson(userPeoplejson, UserPeople.class).getData();
         persionAdapter.setPeoples(peoples);
+        persionAdapter.setUserpeoples(userpeoples);
         handler.post(() -> {
            persionAdapter.notifyDataSetChanged();
         });
+
     }
 
     /**
@@ -112,7 +118,125 @@ public class FPersionFragment extends BaseFragment {
         alertDialog.show();
     }
 
-
+    String userPeoplejson = "\n" +
+            "    {\n" +
+            "        \"status\": 200,\n" +
+            "        \"message\": \"SUCCESS\",\n" +
+            "        \"data\": [\n" +
+            "            {\n" +
+            "                \"id\": 4381,\n" +
+            "                \"userWorkId\": 1,\n" +
+            "                \"power\": 52,\n" +
+            "                \"peopleId\": 8,\n" +
+            "                \"userProductionLineId\": 2654,\n" +
+            "                \"workPostId\": 4\n" +
+            "            },\n" +
+            "            {\n" +
+            "                \"id\": 4380,\n" +
+            "                \"userWorkId\": 1,\n" +
+            "                \"power\": 52,\n" +
+            "                \"peopleId\": 7,\n" +
+            "                \"userProductionLineId\": 2654,\n" +
+            "                \"workPostId\": 3\n" +
+            "            },\n" +
+            "            {\n" +
+            "                \"id\": 4379,\n" +
+            "                \"userWorkId\": 1,\n" +
+            "                \"power\": 52,\n" +
+            "                \"peopleId\": 5,\n" +
+            "                \"userProductionLineId\": 2654,\n" +
+            "                \"workPostId\": 1\n" +
+            "            },\n" +
+            "            {\n" +
+            "                \"id\": 4378,\n" +
+            "                \"userWorkId\": 1,\n" +
+            "                \"power\": 100,\n" +
+            "                \"peopleId\": 30,\n" +
+            "                \"userProductionLineId\": 2654,\n" +
+            "                \"workPostId\": \"\"\n" +
+            "            },\n" +
+            "            {\n" +
+            "                \"id\": 4377,\n" +
+            "                \"userWorkId\": 1,\n" +
+            "                \"power\": 40,\n" +
+            "                \"peopleId\": 23,\n" +
+            "                \"userProductionLineId\": 2655,\n" +
+            "                \"workPostId\": 1\n" +
+            "            },\n" +
+            "            {\n" +
+            "                \"id\": 4376,\n" +
+            "                \"userWorkId\": 1,\n" +
+            "                \"power\": 100,\n" +
+            "                \"peopleId\": 25,\n" +
+            "                \"userProductionLineId\": 2655,\n" +
+            "                \"workPostId\": 6\n" +
+            "            },\n" +
+            "            {\n" +
+            "                \"id\": 4375,\n" +
+            "                \"userWorkId\": 1,\n" +
+            "                \"power\": 100,\n" +
+            "                \"peopleId\": 22,\n" +
+            "                \"userProductionLineId\": 2655,\n" +
+            "                \"workPostId\": \"\"\n" +
+            "            },\n" +
+            "            {\n" +
+            "                \"id\": 4374,\n" +
+            "                \"userWorkId\": 1,\n" +
+            "                \"power\": 50,\n" +
+            "                \"peopleId\": 17,\n" +
+            "                \"userProductionLineId\": 2655,\n" +
+            "                \"workPostId\": 8\n" +
+            "            },\n" +
+            "            {\n" +
+            "                \"id\": 4373,\n" +
+            "                \"userWorkId\": 1,\n" +
+            "                \"power\": 100,\n" +
+            "                \"peopleId\": 15,\n" +
+            "                \"userProductionLineId\": 2655,\n" +
+            "                \"workPostId\": \"\"\n" +
+            "            },\n" +
+            "            {\n" +
+            "                \"id\": 4372,\n" +
+            "                \"userWorkId\": 1,\n" +
+            "                \"power\": 100,\n" +
+            "                \"peopleId\": 16,\n" +
+            "                \"userProductionLineId\": 2655,\n" +
+            "                \"workPostId\": 7\n" +
+            "            },\n" +
+            "            {\n" +
+            "                \"id\": 4371,\n" +
+            "                \"userWorkId\": 1,\n" +
+            "                \"power\": 100,\n" +
+            "                \"peopleId\": 4,\n" +
+            "                \"userProductionLineId\": 2654,\n" +
+            "                \"workPostId\": \"\"\n" +
+            "            },\n" +
+            "            {\n" +
+            "                \"id\": 4370,\n" +
+            "                \"userWorkId\": 1,\n" +
+            "                \"power\": 100,\n" +
+            "                \"peopleId\": 3,\n" +
+            "                \"userProductionLineId\": 2654,\n" +
+            "                \"workPostId\": \"\"\n" +
+            "            },\n" +
+            "            {\n" +
+            "                \"id\": 4369,\n" +
+            "                \"userWorkId\": 1,\n" +
+            "                \"power\": 72,\n" +
+            "                \"peopleId\": 2,\n" +
+            "                \"userProductionLineId\": 2654,\n" +
+            "                \"workPostId\": 2\n" +
+            "            },\n" +
+            "            {\n" +
+            "                \"id\": 4368,\n" +
+            "                \"userWorkId\": 1,\n" +
+            "                \"power\": 100,\n" +
+            "                \"peopleId\": 1,\n" +
+            "                \"userProductionLineId\": 2654,\n" +
+            "                \"workPostId\": \"\"\n" +
+            "            }\n" +
+            "        ]\n" +
+            "    }";
     private String people = "\n" +
             "   {\n" +
             "       \"status\": 200,\n" +

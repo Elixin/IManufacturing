@@ -1,5 +1,7 @@
 package com.lenovo.manufacture.adapter;
 
+import android.annotation.SuppressLint;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.lenovo.manufacture.R;
 import com.lenovo.manufacture.pojo.People;
+import com.lenovo.manufacture.pojo.UserPeople;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +21,11 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class PersionAdapter extends RecyclerView.Adapter<PersionAdapter.VH> {
     private List<People.DataBean> peoples = new ArrayList<>();
+    private List<UserPeople.DataBean> userpeoples = new ArrayList<>();
+
+    public void setUserpeoples(List<UserPeople.DataBean> userpeoples) {
+        this.userpeoples = userpeoples;
+    }
 
     public void setPeoples(List<People.DataBean> peoples) {
         this.peoples = peoples;
@@ -30,10 +38,19 @@ public class PersionAdapter extends RecyclerView.Adapter<PersionAdapter.VH> {
         return new VH(inflate);
     }
 
+    @SuppressLint("ResourceAsColor")
     @Override
     public void onBindViewHolder(@NonNull VH holder, int position) {
         holder.mName.setText(peoples.get(position).getPeopleName());
         holder.mContent.setText(peoples.get(position).getContent());
+        holder.mType.setText("未招聘");
+        holder.mType.setTextColor(Color.RED);
+        for (int i = 0; i < userpeoples.size(); i++) {
+            if (userpeoples.get(i).getPeopleId()==peoples.get(position).getId()){
+                holder.mType.setText("已录取");
+                holder.mType.setTextColor(Color.GREEN);
+            }
+        }
     }
 
 

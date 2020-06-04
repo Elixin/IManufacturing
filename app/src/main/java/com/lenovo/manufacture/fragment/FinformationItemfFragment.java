@@ -1,6 +1,7 @@
 package com.lenovo.manufacture.fragment;
 
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.Gson;
 import com.lenovo.manufacture.R;
+import com.lenovo.manufacture.activity.InformationActivity;
 import com.lenovo.manufacture.adapter.InfomationAdapter;
 import com.lenovo.manufacture.base.BaseFragment;
 import com.lenovo.manufacture.pojo.Information;
@@ -61,7 +63,8 @@ public class FinformationItemfFragment extends BaseFragment {
             @Override
             public void onItemClick(View view, int postion) {
                 EventBus.getDefault().postSticky(collect.get(postion));
-//                startActivity(new Intent(FinformationItemfFragment.this,xx.class));
+                startActivity(new Intent(getContext(), InformationActivity.class));
+
             }
 
             @Override
